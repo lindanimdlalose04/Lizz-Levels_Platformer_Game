@@ -10,18 +10,24 @@ screen_height = 500
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Lizz Levels") 
 
-tile_size = 100
+tile_size = 50
 #load images
 #sun_img = pygame.image.load('img/sun.pgn')
 background_img = pygame.image.load('img/sky.jpg')
-background_img = pygame.transform.scale(background_img, (1000, 1000))
+background_img = pygame.transform.scale(background_img, (500, 500))
+
 
 
 def draw_grid():
-    for line in range(0,6):
-        pygame.draw.line(screen, (255,255, 255), (0, line * tile_size), (screen_width, line* tile_size))
-        pygame.draw.line(screen, (255,255,255), (line * tile_size,0), (line * tile_size, screen_height))
-        
+    # Calculate how many lines based on screen size
+    horizontal_lines = screen_height // tile_size
+    vertical_lines = screen_width // tile_size
+    
+    for line in range(horizontal_lines):
+        pygame.draw.line(screen, (255, 255, 255), (0, line * tile_size), (screen_width, line * tile_size))
+    
+    for line in range(vertical_lines):
+        pygame.draw.line(screen, (255, 255, 255), (line * tile_size, 0), (line * tile_size, screen_height))        
 
 class World():
     def __init__(self,data):
@@ -67,11 +73,16 @@ class World():
 #]
 
 world_data = [
-    [1, 1, 1, 1, 1],  # Row 0
-    [1, 0, 0, 0, 1],  # Row 1
-    [1, 0, 0, 0, 1],  # Row 2
-    [1, 0, 0, 0, 1],  # Row 3
-    [1, 2, 2, 2, 1]   # Row 4 - added this to complete the grid
+    [0, 0, 0, 0,0, 0, 0,0, 0, 0],  # Row 0
+    [0, 0, 0, 0, 0,0, 0, 0, 0, 0],
+    [2, 2, 0, 0, 2,2, 0, 2, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 2, 2, 0, 0, 0, 2, 0, 0],
+    [1, 0, 0, 0, 2, 2, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 2, 2],
+    [1, 0, 0, 2, 2, 2, 0, 0, 1, 1],
+    [1, 0, 0, 0, 0,0, 0, 0, 0, 1],  # Row 3
+    [1, 2, 2, 2, 2, 2, 2, 2, 2, 1]   # Row 4 - added this to complete the grid
 ]
 world = World(world_data)
 #the loop which the game runs in
